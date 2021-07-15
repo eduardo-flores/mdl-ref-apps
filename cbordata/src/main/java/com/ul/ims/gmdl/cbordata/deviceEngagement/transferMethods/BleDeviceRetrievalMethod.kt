@@ -72,7 +72,7 @@ class BleDeviceRetrievalMethod(
                 }
                 opt[CENTRAL_CLIENT_KEY] = centralClient
                 if (centralClient && centralClientUUID != null) {
-                    opt[CENTRAL_CLIENT_KEY] = centralClientUUID
+                    opt[CENTRAL_CLIENT_UUID_KEY] = centralClientUUID
                 }
                 if (mac != null) {
                     opt[PERIPHERAL_MAC_ADDRESS_KEY] = mac
@@ -121,7 +121,7 @@ class BleDeviceRetrievalMethod(
             private fun uuidFromBytes(bytes: ByteArray): UUID {
                 check(bytes.size == 16) { "Expected 16 bytes, found " + bytes.size }
                 val data: ByteBuffer = ByteBuffer.wrap(bytes, 0, 16)
-                data.order(ByteOrder.LITTLE_ENDIAN)
+                data.order(ByteOrder.BIG_ENDIAN)
                 return UUID(data.getLong(0), data.getLong(8))
             }
 

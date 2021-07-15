@@ -36,12 +36,12 @@ data class ServiceCharacteristics(
         BluetoothGattCharacteristic.PROPERTY_NOTIFY,
         BluetoothGattCharacteristic.PERMISSION_WRITE
     )
-//        .apply {
-//        val descriptor = BluetoothGattDescriptor(server2ClientUuid, PERMISSION_WRITE)
-//        descriptor.value = DISABLE_NOTIFICATION_VALUE
-//
-//        this.addDescriptor(descriptor)
-//    }
+        .apply {
+        val descriptor = BluetoothGattDescriptor(server2ClientUuid, PERMISSION_WRITE)
+        descriptor.value = DISABLE_NOTIFICATION_VALUE
+
+        this.addDescriptor(descriptor)
+    }
 
     val client2ServerCharacteristic = BluetoothGattCharacteristic(client2ServerUuid,
         BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE,
@@ -52,12 +52,12 @@ data class ServiceCharacteristics(
         BluetoothGattCharacteristic.PROPERTY_NOTIFY or BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE,
         BluetoothGattCharacteristic.PERMISSION_WRITE
     )
-//        .apply {
-//        val descriptor = BluetoothGattDescriptor(server2ClientUuid, PERMISSION_WRITE)
-//        descriptor.value = ENABLE_NOTIFICATION_VALUE
-//
-//        this.addDescriptor(descriptor)
-//    }
+        .apply {
+        val descriptor = BluetoothGattDescriptor(server2ClientUuid, PERMISSION_WRITE)
+        descriptor.value = DISABLE_NOTIFICATION_VALUE
+
+        this.addDescriptor(descriptor)
+    }
 
     val identCharacteristic = BluetoothGattCharacteristic(identUuid,
         BluetoothGattCharacteristic.PROPERTY_READ,

@@ -148,9 +148,9 @@ class NfcConstants {
             // Added Ble UUID to static handover
             bleUUID?.let { uuid ->
                 val data: ByteBuffer = ByteBuffer.allocate(16)
-                data.order(ByteOrder.LITTLE_ENDIAN)
-                data.putLong(0, uuid.leastSignificantBits)
-                data.putLong(8, uuid.mostSignificantBits)
+                data.order(ByteOrder.BIG_ENDIAN)
+                data.putLong(0, uuid.mostSignificantBits)
+                data.putLong(8, uuid.leastSignificantBits)
 
                 bluetoothLEPayload.addAll(data.array().toList())
             }

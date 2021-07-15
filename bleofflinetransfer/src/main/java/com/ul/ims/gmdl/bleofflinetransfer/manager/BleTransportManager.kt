@@ -169,8 +169,7 @@ class BleTransportManager(
                     EventType.TRANSFER_COMPLETE,
                     EventType.TRANSFER_COMPLETE.description
                 )
-                getPeripheralConnection().writeToState(TERMINATE_TRANSMISSION)
-                getTransportLayer().closeConnection()
+                getPeripheralConnection().closeConnection()
             }
             EventType.ERROR, EventType.GATT_DISCONNECTED -> {
                 getTransportProgressDelegate().onEvent(
@@ -212,7 +211,7 @@ class BleTransportManager(
                     EventType.TRANSFER_IN_PROGRESS.description)
             }
             EventType.STATE_TERMINATE_TRANSMISSION -> {
-                getTransportLayer().closeConnection()
+                getCentralConnection().closeConnection()
             }
             EventType.NO_DEVICE_FOUND -> {
                 getTransportProgressDelegate().onEvent(
@@ -221,7 +220,7 @@ class BleTransportManager(
             }
 
             EventType.GATT_DISCONNECTED -> {
-                getTransportLayer().closeConnection()
+                getCentralConnection().closeConnection()
             }
 
             EventType.ERROR -> {

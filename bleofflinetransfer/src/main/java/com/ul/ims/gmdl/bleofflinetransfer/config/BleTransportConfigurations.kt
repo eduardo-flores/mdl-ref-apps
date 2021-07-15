@@ -25,7 +25,7 @@ class BleTransportConfigurations(private val bleServiceMode: BleServiceMode, ser
         const val MDL_PSM_STATE = "00000001-A123-48CE-896B-4C76973373E6"
         const val MDL_PSM_CLIENT_2_SERVER = "00000002-A123-48CE-896B-4C76973373E6"
         const val MDL_PSM_SERVER_2_CLIENT = "00000003-A123-48CE-896B-4C76973373E6"
-        const val MDL_PSM_IDENT = "00000004-A123-48CE-896B-4C76973373E6"
+        const val MDL_PSM_IDENT = "00000008-A123-48CE-896B-4C76973373E6"
         const val MDL_PSM_SERVICE = "6fa90bce-a8ef-48b0-b6b3-842b6e80f317"
 
         const val MDL_CCM_STATE = "0000005-A123-48CE-896B-4C76973373E6"
@@ -37,7 +37,7 @@ class BleTransportConfigurations(private val bleServiceMode: BleServiceMode, ser
 
     private val mdlPeripheralServerMode =
         ServiceCharacteristics(
-            UUID.fromString(MDL_PSM_SERVICE),
+            serviceUuid,
             UUID.fromString(MDL_PSM_STATE),
             UUID.fromString(MDL_PSM_CLIENT_2_SERVER),
             UUID.fromString(MDL_PSM_SERVER_2_CLIENT),

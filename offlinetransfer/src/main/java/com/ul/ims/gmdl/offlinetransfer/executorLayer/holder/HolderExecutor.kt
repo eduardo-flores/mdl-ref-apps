@@ -268,29 +268,26 @@ class HolderExecutor(
                                         .build()
                                     Log.d("Device Auth", deviceAuth.encodeToString())
 
-                                    issuerAuthBytes.let { iAuth ->
+                                    val issuerAuth = CoseSign1.Builder()
+                                        .decode(issuerAuthBytes)
+                                        .build()
+                                    Log.d("Issuer Auth", issuerAuth.encodeToString())
 
-                                        val issuerAuth = CoseSign1.Builder()
-                                            .decode(iAuth)
+                                    // Retrieve the List of IssuerSignedItems used to create the
+                                    // MSO contained in the retrieved Cose_Sign1
+                                    val issuerNamespaces =
+                                        issuerAuthority?.getIssuerNamespaces(issuerAuthBytes)
+
+                                    issuerNamespaces?.let {
+                                        return Response.Builder()
+                                            .responseForRequest(
+                                                reqItems,
+                                                resultDataIssuerSigned,
+                                                deviceAuth,
+                                                issuerAuth,
+                                                issuerNamespaces
+                                            )
                                             .build()
-                                        Log.d("Issuer Auth", issuerAuth.encodeToString())
-
-                                        // Retrieve the List of IssuerSignedItems used to create the
-                                        // MSO contained in the retrieved Cose_Sign1
-                                        val issuerNamespaces =
-                                            issuerAuthority?.getIssuerNamespaces(iAuth)
-
-                                        issuerNamespaces?.let {
-                                            return Response.Builder()
-                                                .responseForRequest(
-                                                    reqItems,
-                                                    resultDataIssuerSigned,
-                                                    deviceAuth,
-                                                    issuerAuth,
-                                                    issuerNamespaces
-                                                )
-                                                .build()
-                                        }
                                     }
                                 }
 

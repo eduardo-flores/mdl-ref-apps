@@ -123,7 +123,8 @@ class Response private constructor(
         fun responseForRequest(
             requestItems: List<String>,
             resultData: ResultData,
-            deviceAuth: DeviceAuth?, issuerAuth: CoseSign1?,
+            deviceAuth: DeviceAuth,
+            issuerAuth: CoseSign1,
             issuerNamespaces: IssuerNameSpaces
         ) = apply {
 
@@ -159,33 +160,25 @@ class Response private constructor(
 
                 if (itemsWithValue.isNotEmpty()) {
                     // Create IssuerSigned Obj with the only supported namespace
-                    issuerAuth?.let { coseSign1 ->
                         val issuerSigned = IssuerSigned.Builder()
                             .setNameSpaces(MdlNamespace.namespace, itemsWithValue.toTypedArray())
-                            .setIssuerAuth(coseSign1)
+                            .setIssuerAuth(issuerAuth)
                             .build()
 
-                        // DeviceSigned Structure
-                        deviceAuth?.let { devAuth ->
-                            val deviceSigned = DeviceSigned.Builder()
-                                .setDeviceNameSpaces(DeviceNameSpaces.Builder().build())
-                                .setDeviceAuth(devAuth)
-                                .build()
+                    // DeviceSigned Structure
+                    val deviceSigned = DeviceSigned.Builder()
+                        .setDeviceNameSpaces(DeviceNameSpaces.Builder().build())
+                        .setDeviceAuth(deviceAuth)
+                        .build()
 
-                            issuerSigned.let { issueSign ->
-                                // Create DeviceSigned Obj
-                                deviceSigned.let {
-                                    val document = Document.Builder()
-                                        .setDocType(MdlDoctype.docType)
-                                        .setDeviceSigned(deviceSigned)
-                                        .setIssuerSigned(issueSign)
-                                        .build()
-                                    document?.let { doc ->
-                                        setDocuments(mutableListOf(doc))
-                                    }
-                                }
-                            }
-                        }
+                    // Create DeviceSigned Obj
+                    val document = Document.Builder()
+                        .setDocType(MdlDoctype.docType)
+                        .setDeviceSigned(deviceSigned)
+                        .setIssuerSigned(issuerSigned)
+                        .build()
+                    document?.let { doc ->
+                        setDocuments(mutableListOf(doc))
                     }
                 }
             }
